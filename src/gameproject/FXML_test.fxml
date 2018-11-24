@@ -4,11 +4,11 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gameproject.FXMLTestController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gameproject.FXMLTestController">
     <stylesheets>
         <URL value="@fxml_test.css" />
     </stylesheets>
    <children>
-      <CheckBox layoutX="118.0" layoutY="118.0" mnemonicParsing="false" text="I work" />
+      <CheckBox layoutX="122.0" layoutY="168.0" mnemonicParsing="false" text="I work" />
    </children>
 </AnchorPane>
