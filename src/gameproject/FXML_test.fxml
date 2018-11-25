@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.net.URL?>
+<?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.layout.AnchorPane?>
 
@@ -10,5 +11,6 @@
     </stylesheets>
    <children>
       <CheckBox layoutX="122.0" layoutY="168.0" mnemonicParsing="false" text="I work" />
+      <Canvas id="canvas" height="400.0" width="600.0" />
    </children>
 </AnchorPane>
