@@ -16,7 +16,9 @@ import javafx.scene.paint.Color;
 public class MainCharacter {
     
     
-    int x = 20;
+    GameProject gp;
+    
+    int x = 285;
     int y = 20;
     
     
@@ -32,8 +34,15 @@ public class MainCharacter {
     final int HOR_SPEED = 4;
     
     
+    MainCharacter (GameProject gp) {
+        this.gp = gp;
+    }
     
-    public void update (Map<String,Boolean> inputMap, long delta) {
+    
+    
+    public void update ( long delta) {
+        
+        Map<String,Boolean> inputMap = gp.inputMap;
         
         if (inputMap.get("A")) {
             x-= HOR_SPEED;
@@ -70,7 +79,7 @@ public class MainCharacter {
     public void render (GraphicsContext gc, long delta ) {
         
         gc.setFill(Color.BLACK);
-        gc.fillRect(x, y, WIDTH, HEIGHT);
+        gc.fillRect(x - gp.cameraOffset, y, WIDTH, HEIGHT);
         
         
     }

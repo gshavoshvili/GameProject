@@ -41,7 +41,14 @@ public class GameProject extends Application {
         inputMap.put("SPACE", false);
     }
     
-    MainCharacter hero = new MainCharacter();
+    MainCharacter hero = new MainCharacter(this);
+    Platform[] platforms = new Platform[] {
+        new Platform(this,90, 250),
+        new Platform(this,300, 360),
+        new Platform(this,250, 120),
+    };
+    
+    int cameraOffset = 0;
 
     public GameProject() {
         super();
@@ -51,7 +58,11 @@ public class GameProject extends Application {
 
     public void update(long delta) {
        
-        hero.update(inputMap,delta);
+        hero.update(delta);
+        
+        // camera offset
+        cameraOffset = hero.x - 285;
+        if(cameraOffset<0) cameraOffset = 0;
         
     }
 
@@ -61,6 +72,9 @@ public class GameProject extends Application {
         gc.clearRect(0, 0, 600, 400);
         
         hero.render(gc, delta);
+        for (Platform platform : platforms) {
+            platform.render(gc,delta);
+        }
         
     }
 
