@@ -5,6 +5,7 @@
  */
 package gameproject;
 
+import gameproject.GameProject.Direction;
 import java.util.Map;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -44,14 +45,35 @@ public class MainCharacter {
         
         Map<String,Boolean> inputMap = gp.inputMap;
         
-        if (inputMap.get("A")) {
+        Direction movedTo = Direction.NONE;
+        
+        if (inputMap.get("A") && !inputMap.get("D")) {
             x-= HOR_SPEED;
+            movedTo = Direction.LEFT;
         }
         
-        if (inputMap.get("D")) {
+        else if (inputMap.get("D") && !inputMap.get("A")) {
             x+= HOR_SPEED;
+            movedTo = Direction.RIGHT;
         }
         
+        Platform collisionWith = null;
+        for (Platform pl : gp.platforms) {
+           if (pl.collidesWith(x, y, WIDTH, HEIGHT)) {
+               collisionWith = pl;
+               System.out.println("Horizontal collision: " + x + " " + y + " " + collisionWith.x + " "+ collisionWith.y);
+               break;
+           }
+        }
+        
+        if (collisionWith != null) {
+            if (movedTo == Direction.LEFT) {
+                x = collisionWith.x + collisionWith.WIDTH;
+            }
+            else {
+                x = collisionWith.x - WIDTH;
+            }
+        }
         
         // Gravity
         
@@ -59,6 +81,7 @@ public class MainCharacter {
         y+=vert_acceleration;
         
         boolean onGround = false;
+        collisionWith = null;
         
         if(y > 400 - HEIGHT) {
             y=400 - HEIGHT;
@@ -68,6 +91,29 @@ public class MainCharacter {
         else {
             onGround = false;
         }
+        
+        
+        for (Platform pl : gp.platforms) {
+           if (pl.collidesWith(x, y, WIDTH, HEIGHT)) {
+               collisionWith = pl;
+               System.out.println("Vertical collision: " + x + " " + y + " " + collisionWith.x + " "+ collisionWith.y);
+               break;
+           }
+        }
+        
+        if (collisionWith != null) {
+           if (vert_acceleration < 0) {
+                y = collisionWith.y + collisionWith.HEIGHT;
+            }
+            else {
+                y = collisionWith.y - HEIGHT;
+                onGround = true;
+                System.out.println(y);
+            }
+           vert_acceleration = 0;
+                
+        }
+        
         
         if (inputMap.get("SPACE")) {
             if (onGround)

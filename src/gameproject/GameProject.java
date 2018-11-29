@@ -29,7 +29,9 @@ import javax.swing.InputMap;
  */
 public class GameProject extends Application {
 
-    
+    enum Direction {
+        LEFT,RIGHT, NONE
+    }
 
     Map<String, Boolean> inputMap = new HashMap<>();
 
@@ -45,6 +47,7 @@ public class GameProject extends Application {
     Platform[] platforms = new Platform[] {
         new Platform(this,90, 250),
         new Platform(this,300, 360),
+        new Platform(this,360, 300),
         new Platform(this,250, 120),
     };
     

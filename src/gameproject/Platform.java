@@ -34,6 +34,17 @@ public class Platform {
         this.y = y;
     }
     
+    public boolean collidesWith (int ox, int oy, int owidth, int oheight) {
+        
+        if ( x < ox+owidth && x+WIDTH > ox &&
+                y < oy+oheight && y+HEIGHT > oy
+                ) {
+            
+            return true;
+        }   
+        return false;
+        
+    }
     
     
     public void render (GraphicsContext gc, long delta ) {
