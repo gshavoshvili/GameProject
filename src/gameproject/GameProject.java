@@ -1,4 +1,4 @@
-/*
+    /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -29,8 +29,7 @@ import javax.swing.InputMap;
  */
 public class GameProject extends Application {
 
-    int x = 20;
-    int y = 20;
+    
 
     Map<String, Boolean> inputMap = new HashMap<>();
 
@@ -39,34 +38,30 @@ public class GameProject extends Application {
         inputMap.put("A", false);
         inputMap.put("S", false);
         inputMap.put("D", false);
+        inputMap.put("SPACE", false);
     }
+    
+    MainCharacter hero = new MainCharacter();
 
     public GameProject() {
         super();
         initInputs();
+        
     }
 
     public void update(long delta) {
-        if (inputMap.get("W")) {
-            y--;
-        }
-        if (inputMap.get("A")) {
-            x--;
-        }
-        if (inputMap.get("S")) {
-            y++;
-        }
-        if (inputMap.get("D")) {
-            x++;
-        }
+       
+        hero.update(inputMap,delta);
+        
     }
 
     GraphicsContext gc;
 
     public void render(long delta) {
         gc.clearRect(0, 0, 600, 400);
-        gc.setFill(Color.BLACK);
-        gc.fillRect(x, y, 30, 30);
+        
+        hero.render(gc, delta);
+        
     }
 
     @Override
