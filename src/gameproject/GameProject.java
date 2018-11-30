@@ -1,4 +1,4 @@
-    /*
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -21,7 +21,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javax.swing.InputMap;
 
 /**
  *
@@ -30,7 +29,7 @@ import javax.swing.InputMap;
 public class GameProject extends Application {
 
     enum Direction {
-        LEFT,RIGHT, NONE
+        LEFT, RIGHT, NONE
     }
 
     Map<String, Boolean> inputMap = new HashMap<>();
@@ -42,43 +41,44 @@ public class GameProject extends Application {
         inputMap.put("D", false);
         inputMap.put("SPACE", false);
     }
-    
-    MainCharacter hero = new MainCharacter(this);
-    Platform[] platforms = new Platform[] {
-        new Platform(this,90, 250),
-        new Platform(this,300, 360),
-        new Platform(this,360, 300),
-        new Platform(this,250, 120),
-    };
-    
+
+    MainCharacter hero = new MainCharacter(this, 285, 20, 30, 30);
+    Platform[] platforms = new Platform[]{
+        new Platform(this, 90, 250, 90, 30),
+        new Platform(this, 300, 360, 90, 30),
+        new Platform(this, 360, 300, 90, 30),
+        new Platform(this, 250, 120, 90, 30),};
+
     int cameraOffset = 0;
 
     public GameProject() {
         super();
         initInputs();
-        
+
     }
 
     public void update(long delta) {
-       
+
         hero.update(delta);
-        
+
         // camera offset
         cameraOffset = hero.x - 285;
-        if(cameraOffset<0) cameraOffset = 0;
-        
+        if (cameraOffset < 0) {
+            cameraOffset = 0;
+        }
+
     }
 
     GraphicsContext gc;
 
     public void render(long delta) {
         gc.clearRect(0, 0, 600, 400);
-        
+
         hero.render(gc, delta);
         for (Platform platform : platforms) {
-            platform.render(gc,delta);
+            platform.render(gc, delta);
         }
-        
+
     }
 
     @Override

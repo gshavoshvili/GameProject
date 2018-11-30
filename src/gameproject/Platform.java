@@ -9,54 +9,29 @@ import java.util.Map;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
+public class Platform extends Entity {
 
-public class Platform {
-   
-
-
-    
-    
-    GameProject gp;
-    
-    int x;
-    int y;
-    
-    
-    final int WIDTH = 90;
-    final int HEIGHT = 30;
-    
-    
-   
-    
-    Platform (GameProject gp, int x, int y) {
-        this.gp = gp;
-        this.x = x;
-        this.y = y;
+    Platform(GameProject gp, int x, int y, int width, int height) {
+        super(gp, x, y, width, height);
     }
-    
-    public boolean collidesWith (int ox, int oy, int owidth, int oheight) {
-        
-        if ( x < ox+owidth && x+WIDTH > ox &&
-                y < oy+oheight && y+HEIGHT > oy
-                ) {
-            
+
+    public boolean collidesWith(int ox, int oy, int owidth, int oheight) {
+
+        if (x < ox + owidth && x + WIDTH > ox
+                && y < oy + oheight && y + HEIGHT > oy) {
+
             return true;
-        }   
+        }
         return false;
-        
+
     }
-    
-    
-    public void render (GraphicsContext gc, long delta ) {
-        
+
+    @Override
+    public void render(GraphicsContext gc, long delta) {
+
         gc.setFill(Color.BLACK);
         gc.fillRect(x - gp.cameraOffset, y, WIDTH, HEIGHT);
-        
-        
+
     }
-    
+
 }
-
-    
-    
-
