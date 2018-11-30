@@ -48,6 +48,10 @@ public class GameProject extends Application {
         new Platform(this, 300, 360, 90, 30),
         new Platform(this, 360, 300, 90, 30),
         new Platform(this, 250, 120, 90, 30),};
+    
+    Bullet[] bullets = new Bullet[]{
+        new Bullet(this,300,300,15,15)
+    };
 
     int cameraOffset = 0;
 
@@ -60,6 +64,10 @@ public class GameProject extends Application {
     public void update(long delta) {
 
         hero.update(delta);
+        
+        for (Bullet bullet : bullets) {
+            bullet.update(delta);
+        }
 
         // camera offset
         cameraOffset = hero.x - 285;
@@ -77,6 +85,9 @@ public class GameProject extends Application {
         hero.render(gc, delta);
         for (Platform platform : platforms) {
             platform.render(gc, delta);
+        }
+        for (Bullet bullet : bullets) {
+            bullet.render(gc, delta);
         }
 
     }

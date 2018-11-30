@@ -26,6 +26,7 @@ public class MainCharacter extends Entity {
     MainCharacter(GameProject gp, int x, int y, int width, int height) {
         super(gp, x, y, width, height);
     }
+    
 
     public void update(long delta) {
 
