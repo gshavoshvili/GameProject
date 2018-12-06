@@ -23,27 +23,43 @@ public class MainCharacter extends Entity {
 
     final int HOR_SPEED = 4;
     
+    Vector mousePositionOnScreen = new Vector(0,0);
     double mouseAngle;
 
     MainCharacter(GameProject gp, Vector position, int width, int height) {
         super(gp, position, width, height);
     }
     
+    public Vector getCenter() {
+        return position.add(new Vector(WIDTH/2,HEIGHT/2));
+    }
+    
+    public void calculateMouseAngle() {
+        double angle = Vector.angleBetween(getCenter(), mousePositionOnScreen.add(new Vector(gp.cameraOffset,0)));
+        System.out.println(angle);
+        mouseAngle = angle;
+    }
+    
 
     public void update(long delta) {
 
         Map<String, Boolean> inputMap = gp.inputMap;
-
-        Direction movedTo = Direction.NONE;
+        
+        
+        Direction movedToHor = Direction.NONE;
+        
 
         if (inputMap.get("A") && !inputMap.get("D")) {
+            
             position.x -= HOR_SPEED;
-            movedTo = Direction.LEFT;
+            movedToHor = Direction.LEFT;
         } else if (inputMap.get("D") && !inputMap.get("A")) {
+            
             position.x += HOR_SPEED;
-            movedTo = Direction.RIGHT;
+            movedToHor = Direction.RIGHT;
         }
-
+        
+        // TODO: Only if moved?
         Platform collisionWith = null;
         for (Platform pl : gp.platforms) {
             if (pl.collidesWith(position, WIDTH, HEIGHT)) {
@@ -54,15 +70,21 @@ public class MainCharacter extends Entity {
         }
 
         if (collisionWith != null) {
-            if (movedTo == Direction.LEFT) {
+            
+            if (movedToHor == Direction.LEFT) {
                 position.x = collisionWith.position.x + collisionWith.WIDTH;
             } else {
                 position.x = collisionWith.position.x - WIDTH;
             }
+            movedToHor = Direction.NONE;
         }
 
         // Gravity
+        
+        boolean movedVert = false;
         vert_acceleration += GRAV_ACCELERATION;
+        
+        if (vert_acceleration != 0) movedVert =true;
         position.y += vert_acceleration;
 
         boolean onGround = false;
@@ -86,6 +108,7 @@ public class MainCharacter extends Entity {
 
         if (collisionWith != null) {
             if (vert_acceleration < 0) {
+                // was moving up
                 position.y = collisionWith.position.y + collisionWith.HEIGHT;
             } else {
                 position.y = collisionWith.position.y - HEIGHT;
@@ -93,6 +116,7 @@ public class MainCharacter extends Entity {
                 //System.out.println(position.y);
             }
             vert_acceleration = 0;
+            movedVert = false;
 
         }
 
@@ -100,6 +124,10 @@ public class MainCharacter extends Entity {
             if (onGround) {
                 vert_acceleration += JUMP_ACCELERATION;
             }
+        }
+        
+        if (movedToHor != Direction.NONE || movedVert) {
+            calculateMouseAngle();
         }
 
     }

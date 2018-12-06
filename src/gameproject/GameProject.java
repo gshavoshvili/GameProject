@@ -130,13 +130,13 @@ public class GameProject extends Application {
             // TODO angle doesn't recalculate on jump or move
             
             // don't forget camera offset for mouse position
-            double angle = Vector.angleBetween(hero.position, new Vector(e.getX()+cameraOffset, e.getY()));
-            System.out.println(angle);
-            hero.mouseAngle = angle;
+            hero.mousePositionOnScreen = new Vector(e.getX(), e.getY());
+            hero.calculateMouseAngle();
         });
 
         
         canvas.setOnMousePressed((MouseEvent e) -> {
+            //TODO maybe keep momentum
             bullets.add(new Bullet(this, hero.position.add(new Vector(1,0)),30, 30, hero.mouseAngle  ));
         });
         
