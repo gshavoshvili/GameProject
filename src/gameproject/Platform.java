@@ -11,14 +11,14 @@ import javafx.scene.paint.Color;
 
 public class Platform extends Entity {
 
-    Platform(GameProject gp, int x, int y, int width, int height) {
-        super(gp, x, y, width, height);
+    Platform(GameProject gp, Vector position, int width, int height) {
+        super(gp, position, width, height);
     }
 
-    public boolean collidesWith(int ox, int oy, int owidth, int oheight) {
+    public boolean collidesWith(Vector oposition, int owidth, int oheight) {
 
-        if (x < ox + owidth && x + WIDTH > ox
-                && y < oy + oheight && y + HEIGHT > oy) {
+        if (position.x < oposition.x + owidth && position.x + WIDTH > oposition.x
+                && position.y < oposition.y + oheight && position.y + HEIGHT > oposition.y) {
 
             return true;
         }
@@ -30,7 +30,7 @@ public class Platform extends Entity {
     public void render(GraphicsContext gc, long delta) {
 
         gc.setFill(Color.BLACK);
-        gc.fillRect(x - gp.cameraOffset, y, WIDTH, HEIGHT);
+        gc.fillRect(position.x - gp.cameraOffset, position.y, WIDTH, HEIGHT);
 
     }
 

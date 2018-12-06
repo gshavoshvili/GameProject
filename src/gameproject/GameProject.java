@@ -5,6 +5,7 @@
  */
 package gameproject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import javafx.animation.AnimationTimer;
@@ -18,6 +19,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -42,16 +44,14 @@ public class GameProject extends Application {
         inputMap.put("SPACE", false);
     }
 
-    MainCharacter hero = new MainCharacter(this, 285, 20, 30, 30);
+    MainCharacter hero = new MainCharacter(this, new Vector(285, 20), 30, 30);
     Platform[] platforms = new Platform[]{
-        new Platform(this, 90, 250, 90, 30),
-        new Platform(this, 300, 360, 90, 30),
-        new Platform(this, 360, 300, 90, 30),
-        new Platform(this, 250, 120, 90, 30),};
+        new Platform(this, new Vector(90, 250), 90, 30),
+        new Platform(this, new Vector(300, 360), 90, 30),
+        new Platform(this, new Vector(360, 300), 90, 30),
+        new Platform(this, new Vector(250, 120), 90, 30),};
     
-    Bullet[] bullets = new Bullet[]{
-        new Bullet(this,300,300,15,15)
-    };
+    ArrayList<Bullet> bullets = new ArrayList<>();
 
     int cameraOffset = 0;
 
@@ -70,7 +70,7 @@ public class GameProject extends Application {
         }
 
         // camera offset
-        cameraOffset = hero.x - 285;
+        cameraOffset = (int) hero.position.x - 285;
         if (cameraOffset < 0) {
             cameraOffset = 0;
         }
@@ -119,16 +119,27 @@ public class GameProject extends Application {
         }
         );
 
-        canvas.setOnKeyReleased(
-                new EventHandler<KeyEvent>() {
-            public void handle(KeyEvent e) {
-                String code = e.getCode().toString();
-                System.out.println(code + " released");
-                inputMap.replace(code, Boolean.FALSE);
-
-            }
+        canvas.setOnKeyReleased((KeyEvent e) -> {
+            String code = e.getCode().toString();
+            System.out.println(code + " released");
+            inputMap.replace(code, Boolean.FALSE);
+        });
+        
+        canvas.setOnMouseMoved((MouseEvent e) -> {
+            // TODO let angle be from hero center, not corner
+            // TODO angle doesn't recalculate on jump or move
+            
+            // don't forget camera offset for mouse position
+            double angle = Vector.angleBetween(hero.position, new Vector(e.getX()+cameraOffset, e.getY()));
+            System.out.println(angle);
+            hero.mouseAngle = angle;
         });
 
+        
+        canvas.setOnMousePressed((MouseEvent e) -> {
+            bullets.add(new Bullet(this, hero.position.add(new Vector(1,0)),30, 30, hero.mouseAngle  ));
+        });
+        
         AnimationTimer animator = new AnimationTimer() {
 
             @Override

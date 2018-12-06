@@ -22,9 +22,11 @@ public class MainCharacter extends Entity {
     int vert_acceleration = 0;
 
     final int HOR_SPEED = 4;
+    
+    double mouseAngle;
 
-    MainCharacter(GameProject gp, int x, int y, int width, int height) {
-        super(gp, x, y, width, height);
+    MainCharacter(GameProject gp, Vector position, int width, int height) {
+        super(gp, position, width, height);
     }
     
 
@@ -35,39 +37,39 @@ public class MainCharacter extends Entity {
         Direction movedTo = Direction.NONE;
 
         if (inputMap.get("A") && !inputMap.get("D")) {
-            x -= HOR_SPEED;
+            position.x -= HOR_SPEED;
             movedTo = Direction.LEFT;
         } else if (inputMap.get("D") && !inputMap.get("A")) {
-            x += HOR_SPEED;
+            position.x += HOR_SPEED;
             movedTo = Direction.RIGHT;
         }
 
         Platform collisionWith = null;
         for (Platform pl : gp.platforms) {
-            if (pl.collidesWith(x, y, WIDTH, HEIGHT)) {
+            if (pl.collidesWith(position, WIDTH, HEIGHT)) {
                 collisionWith = pl;
-                System.out.println("Horizontal collision: " + x + " " + y + " " + collisionWith.x + " " + collisionWith.y);
+                // System.out.println("Horizontal collision: " + position.x + " " + position.y + " " + collisionWith.position.x + " " + collisionWith.position.y);
                 break;
             }
         }
 
         if (collisionWith != null) {
             if (movedTo == Direction.LEFT) {
-                x = collisionWith.x + collisionWith.WIDTH;
+                position.x = collisionWith.position.x + collisionWith.WIDTH;
             } else {
-                x = collisionWith.x - WIDTH;
+                position.x = collisionWith.position.x - WIDTH;
             }
         }
 
         // Gravity
         vert_acceleration += GRAV_ACCELERATION;
-        y += vert_acceleration;
+        position.y += vert_acceleration;
 
         boolean onGround = false;
         collisionWith = null;
 
-        if (y > 400 - HEIGHT) {
-            y = 400 - HEIGHT;
+        if (position.y > 400 - HEIGHT) {
+            position.y = 400 - HEIGHT;
             vert_acceleration = 0;
             onGround = true;
         } else {
@@ -75,20 +77,20 @@ public class MainCharacter extends Entity {
         }
 
         for (Platform pl : gp.platforms) {
-            if (pl.collidesWith(x, y, WIDTH, HEIGHT)) {
+            if (pl.collidesWith(position, WIDTH, HEIGHT)) {
                 collisionWith = pl;
-                System.out.println("Vertical collision: " + x + " " + y + " " + collisionWith.x + " " + collisionWith.y);
+                // System.out.println("Vertical collision: " + position.x + " " + position.y + " " + collisionWith.position.x + " " + collisionWith.position.y);
                 break;
             }
         }
 
         if (collisionWith != null) {
             if (vert_acceleration < 0) {
-                y = collisionWith.y + collisionWith.HEIGHT;
+                position.y = collisionWith.position.y + collisionWith.HEIGHT;
             } else {
-                y = collisionWith.y - HEIGHT;
+                position.y = collisionWith.position.y - HEIGHT;
                 onGround = true;
-                System.out.println(y);
+                //System.out.println(position.y);
             }
             vert_acceleration = 0;
 
@@ -106,7 +108,7 @@ public class MainCharacter extends Entity {
     public void render(GraphicsContext gc, long delta) {
 
         gc.setFill(Color.BLACK);
-        gc.fillRect(x - gp.cameraOffset, y, WIDTH, HEIGHT);
+        gc.fillRect(position.x - gp.cameraOffset, position.y, WIDTH, HEIGHT);
 
     }
 
