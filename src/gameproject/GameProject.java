@@ -19,6 +19,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -42,6 +43,7 @@ public class GameProject extends Application {
         inputMap.put("S", false);
         inputMap.put("D", false);
         inputMap.put("SPACE", false);
+        inputMap.put("LMB", false);
     }
 
     MainCharacter hero = new MainCharacter(this, new Vector(285, 20), 30, 30);
@@ -91,6 +93,17 @@ public class GameProject extends Application {
         }
 
     }
+    
+    public void onMouseMove(MouseEvent e) {
+        // Move the method out to use for move AND drag
+        
+            // TODO let angle be from hero center, not corner
+            // TODO angle doesn't recalculate on jump or move
+            
+            // don't forget camera offset for mouse position
+            hero.mousePositionOnScreen = new Vector(e.getX(), e.getY());
+            hero.calculateMouseAngle();
+    }
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -125,19 +138,27 @@ public class GameProject extends Application {
             inputMap.replace(code, Boolean.FALSE);
         });
         
-        canvas.setOnMouseMoved((MouseEvent e) -> {
-            // TODO let angle be from hero center, not corner
-            // TODO angle doesn't recalculate on jump or move
-            
-            // don't forget camera offset for mouse position
-            hero.mousePositionOnScreen = new Vector(e.getX(), e.getY());
-            hero.calculateMouseAngle();
+        canvas.setOnMouseMoved((MouseEvent e)-> {
+            onMouseMove(e);
+        });
+        canvas.setOnMouseDragged((MouseEvent e)-> {
+            onMouseMove(e);
         });
 
         
         canvas.setOnMousePressed((MouseEvent e) -> {
             //TODO maybe keep momentum
-            bullets.add(new Bullet(this, hero.position.add(new Vector(1,0)),30, 30, hero.mouseAngle  ));
+            if (e.getButton() == MouseButton.PRIMARY) {
+                inputMap.put("LMB", true);
+            }
+            
+        });
+        
+        canvas.setOnMouseReleased((MouseEvent e) -> {
+            if (e.getButton() == MouseButton.PRIMARY) {
+                inputMap.put("LMB", false);
+            }
+            
         });
         
         AnimationTimer animator = new AnimationTimer() {

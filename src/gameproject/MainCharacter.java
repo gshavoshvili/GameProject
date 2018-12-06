@@ -40,6 +40,9 @@ public class MainCharacter extends Entity {
         mouseAngle = angle;
     }
     
+    public void shoot() {
+        gp.bullets.add(new Bullet(gp, position.add(new Vector(1,0)),30, 30, mouseAngle  ));
+    }
 
     public void update(long delta) {
 
@@ -128,6 +131,10 @@ public class MainCharacter extends Entity {
         
         if (movedToHor != Direction.NONE || movedVert) {
             calculateMouseAngle();
+        }
+        
+        if (inputMap.get("LMB")) {
+            shoot();
         }
 
     }

@@ -14,7 +14,7 @@ import javafx.scene.canvas.GraphicsContext;
 public class Bullet extends Entity {
 
     
-    final static Vector initialDelta = new Vector (3,0);
+    final static Vector initialDelta = new Vector (10,0);
     Vector deltaV; 
     
     Bullet(GameProject gp, Vector position, int width, int height, double angle) {
