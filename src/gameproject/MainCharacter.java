@@ -6,6 +6,9 @@
 package gameproject;
 
 import gameproject.GameProject.Direction;
+import gameproject.guns.Automatic;
+import gameproject.guns.Gun;
+import gameproject.guns.Pistol;
 import java.util.Map;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -25,9 +28,13 @@ public class MainCharacter extends Entity {
     
     Vector mousePositionOnScreen = new Vector(0,0);
     double mouseAngle;
+    
+    Gun[] guns = { new Pistol(), new Automatic() };
+    Gun gun = new Pistol();
 
     MainCharacter(GameProject gp, Vector position, int width, int height) {
         super(gp, position, width, height);
+        
     }
     
     public Vector getCenter() {
@@ -41,13 +48,19 @@ public class MainCharacter extends Entity {
     }
     
     public void shoot() {
-        gp.bullets.add(new Bullet(gp, position.add(new Vector(1,0)),30, 30, mouseAngle  ));
+        gun.tryShoot(gp, position, mouseAngle);
     }
 
     public void update(long delta) {
 
         Map<String, Boolean> inputMap = gp.inputMap;
         
+        if (inputMap.get("DIGIT1")) {
+            gun = guns[0];
+        }
+        else if (inputMap.get("DIGIT2")) {
+            gun = guns[1];
+        }
         
         Direction movedToHor = Direction.NONE;
         

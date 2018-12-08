@@ -14,12 +14,12 @@ public class Vector {
     double x;
     double y;
     
-    Vector (double x,double y){
+    public Vector (double x,double y){
         this.x=x;
         this.y=y;
     }
 
-    Vector rotate(double angleRadians) {
+    public Vector rotate(double angleRadians) {
         double sin = Math.sin(angleRadians);
         double cos = Math.cos(angleRadians);
         System.out.println(angleRadians + " " + sin + " " + cos);

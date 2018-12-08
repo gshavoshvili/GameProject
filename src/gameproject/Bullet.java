@@ -17,7 +17,7 @@ public class Bullet extends Entity {
     final static Vector initialDelta = new Vector (10,0);
     Vector deltaV; 
     
-    Bullet(GameProject gp, Vector position, int width, int height, double angle) {
+    public Bullet(GameProject gp, Vector position, int width, int height, double angle) {
         super(gp, position, width, height);
         this.deltaV = initialDelta.rotate(angle);
     }

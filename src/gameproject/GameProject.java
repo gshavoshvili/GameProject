@@ -45,6 +45,8 @@ public class GameProject extends Application {
         inputMap.put("D", false);
         inputMap.put("SPACE", false);
         inputMap.put("LMB", false);
+        inputMap.put("DIGIT1", false);
+        inputMap.put("DIGIT2", false);
     }
     
 
@@ -55,7 +57,7 @@ public class GameProject extends Application {
         new Platform(this, new Vector(360, 300), 90, 30, new GrassTile()),
         new Platform(this, new Vector(250, 120), 90, 30, new GrassTile())};
     
-    ArrayList<Bullet> bullets = new ArrayList<>();
+    public ArrayList<Bullet> bullets = new ArrayList<>();
     
     //Tile tile;
     
