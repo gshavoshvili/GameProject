@@ -15,16 +15,14 @@ public abstract class Entity {
 
     GameProject gp;
 
-    int x;
-    int y;
+    Vector position;
 
     final int WIDTH;
     final int HEIGHT;
 
-    Entity(GameProject gp, int x, int y, int width, int height) {
+    Entity(GameProject gp, Vector position, int width, int height) {
         this.gp = gp;
-        this.x = x;
-        this.y = y;
+        this.position = position;
         this.WIDTH = width;
         this.HEIGHT = height;
     }

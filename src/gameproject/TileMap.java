@@ -71,18 +71,44 @@ class GrassTile implements Tile{
 
 class DirtTile implements Tile{
     
+    Image img;
+    Logger logger = Logger.getLogger(GrassTile.class.getName());
+
+    DirtTile() {
+        try {
+            BufferedImage capture = ImageIO.read(getClass().getResourceAsStream("resources/Grass.png"));
+            this.img = SwingFXUtils.toFXImage(capture, null);
+        } catch (IOException ex) {
+            logger.info("Cant read image!!!");
+        }
+    }
     
     @Override
     public void DrawTile(GraphicsContext gc, int x, int y){
-        
+//        GraphicsContext.drawImage(img, 100, 100);
+//        System.out.println("test");
+        gc.drawImage(img,x,y);
     }
 }
 
 class WaterTile implements Tile{
     
+     Image img;
+    Logger logger = Logger.getLogger(GrassTile.class.getName());
+
+    WaterTile() {
+        try {
+            BufferedImage capture = ImageIO.read(getClass().getResourceAsStream("resources/Grass.png"));
+            this.img = SwingFXUtils.toFXImage(capture, null);
+        } catch (IOException ex) {
+            logger.info("Cant read image!!!");
+        }
+    }
     
     @Override
     public void DrawTile(GraphicsContext gc, int x, int y){
-        
+//        GraphicsContext.drawImage(img, 100, 100);
+//        System.out.println("test");
+        gc.drawImage(img,x,y);
     }
 }

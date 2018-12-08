@@ -15,15 +15,15 @@ public class Platform extends Entity {
     
     Tile tl;
 
-    Platform(GameProject gp, int x, int y, int width, int height, Tile tl) {
-        super(gp, x, y, width, height);
+    Platform(GameProject gp, Vector position, int width, int height, Tile tl) {
+        super(gp, position, width, height);
         this.tl = tl;
     }
 
-    public boolean collidesWith(int ox, int oy, int owidth, int oheight) {
+    public boolean collidesWith(Vector oposition, int owidth, int oheight) {
 
-        if (x < ox + owidth && x + WIDTH > ox
-                && y < oy + oheight && y + HEIGHT > oy) {
+        if (position.x < oposition.x + owidth && position.x + WIDTH > oposition.x
+                && position.y < oposition.y + oheight && position.y + HEIGHT > oposition.y) {
 
             return true;
         }
@@ -34,7 +34,7 @@ public class Platform extends Entity {
     @Override
     public void render(GraphicsContext gc, long delta) {
 
-          tl.DrawTile(gc, x, y);
+          tl.DrawTile(gc, position.x - gp.cameraOffset, position.y);
 //        gc.setFill(Color.BLACK);
 //        gc.fillRect(x - gp.cameraOffset, y, WIDTH, HEIGHT);
 
