@@ -34,7 +34,7 @@ public class Platform extends Entity {
     @Override
     public void render(GraphicsContext gc, long delta) {
 
-          tl.DrawTile(gc, position.x - gp.cameraOffset, position.y);
+          tl.DrawTile(gc, (int)(position.x - gp.cameraOffset), (int)position.y);
 //        gc.setFill(Color.BLACK);
 //        gc.fillRect(x - gp.cameraOffset, y, WIDTH, HEIGHT);
 
