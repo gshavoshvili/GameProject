@@ -33,6 +33,7 @@ public class GameProject extends Application {
     }
 
     Map<String, Boolean> inputMap = new HashMap<>();
+    GraphicsContext gc;
 
     void initInputs() {
         inputMap.put("W", false);
@@ -41,23 +42,27 @@ public class GameProject extends Application {
         inputMap.put("D", false);
         inputMap.put("SPACE", false);
     }
+    
 
     MainCharacter hero = new MainCharacter(this, 285, 20, 30, 30);
     Platform[] platforms = new Platform[]{
-        new Platform(this, 90, 250, 90, 30),
-        new Platform(this, 300, 360, 90, 30),
-        new Platform(this, 360, 300, 90, 30),
-        new Platform(this, 250, 120, 90, 30),};
+        new Platform(this, 90, 250, 32, 32, new GrassTile()),
+        new Platform(this, 300, 360, 90, 30, new GrassTile()),
+        new Platform(this, 360, 300, 90, 30, new GrassTile()),
+        new Platform(this, 250, 120, 90, 30, new GrassTile())};
     
     Bullet[] bullets = new Bullet[]{
         new Bullet(this,300,300,15,15)
     };
-
+    
+    //Tile tile;
+    
     int cameraOffset = 0;
 
     public GameProject() {
         super();
         initInputs();
+//        tile = new GrassTile();
 
     }
 
@@ -77,8 +82,6 @@ public class GameProject extends Application {
 
     }
 
-    GraphicsContext gc;
-
     public void render(long delta) {
         gc.clearRect(0, 0, 600, 400);
 
@@ -89,6 +92,8 @@ public class GameProject extends Application {
         for (Bullet bullet : bullets) {
             bullet.render(gc, delta);
         }
+        
+        //tile.DrawTile(gc);
 
     }
 
