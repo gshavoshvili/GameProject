@@ -7,6 +7,7 @@ package gameproject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -38,7 +39,7 @@ public class GameProject extends Application {
     Map<String, Boolean> inputMap = new HashMap<>();
     GraphicsContext gc;
 
-    void initInputs() {
+    final void initInputs() {
         inputMap.put("W", false);
         inputMap.put("A", false);
         inputMap.put("S", false);
@@ -57,6 +58,11 @@ public class GameProject extends Application {
         new Platform(this, new Vector(360, 300), 90, 30, new GrassTile()),
         new Platform(this, new Vector(250, 120), 90, 30, new GrassTile())};
     
+    public ArrayList<Enemy> enemies = new ArrayList<>();
+    final void initEnemies(){
+        enemies.add(new Enemy(this, new Vector(150, 250), 32, 32));
+    };
+    
     public ArrayList<Bullet> bullets = new ArrayList<>();
     
     //Tile tile;
@@ -66,6 +72,7 @@ public class GameProject extends Application {
     public GameProject() {
         super();
         initInputs();
+        initEnemies();
 //        tile = new GrassTile();
 
     }
@@ -74,9 +81,18 @@ public class GameProject extends Application {
 
         hero.update(delta);
         
-        for (Bullet bullet : bullets) {
+        // Using iterator directly to avoid ConcurrentModificationException
+        
+        Iterator<Bullet> iter = bullets.iterator();
+
+        while (iter.hasNext()) {
+            Bullet bullet = iter.next();
             bullet.update(delta);
+            if (bullet.shouldDestroy)
+                iter.remove();
         }
+        
+        
 
         // camera offset
         cameraOffset = (int) hero.position.x - 285;
@@ -89,12 +105,15 @@ public class GameProject extends Application {
     public void render(long delta) {
         gc.clearRect(0, 0, 600, 400);
 
-        hero.render(gc, delta);
+        hero.render(gc);
         for (Platform platform : platforms) {
-            platform.render(gc, delta);
+            platform.render(gc);
+        }
+        for (Enemy enemy : enemies) {
+            enemy.render(gc);
         }
         for (Bullet bullet : bullets) {
-            bullet.render(gc, delta);
+            bullet.render(gc);
         }
         
         //tile.DrawTile(gc);

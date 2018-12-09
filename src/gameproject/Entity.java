@@ -26,7 +26,22 @@ public abstract class Entity {
         this.WIDTH = width;
         this.HEIGHT = height;
     }
+    
+    public boolean collisionWith(Entity ent) {
 
-    abstract void render(GraphicsContext gc, long delta);
+        if (position.x < ent.position.x + ent.WIDTH && position.x + WIDTH > ent.position.x
+                && position.y < ent.position.y + ent.HEIGHT && position.y + HEIGHT > ent.position.y) {
+
+            return true;
+        }
+        return false;
+
+    }
+    
+    public Vector getCenter() {
+        return position.add(new Vector(WIDTH/2,HEIGHT/2));
+    }
+
+    abstract void render(GraphicsContext gc);
 
 }

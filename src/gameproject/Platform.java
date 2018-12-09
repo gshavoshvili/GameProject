@@ -20,19 +20,10 @@ public class Platform extends Entity {
         this.tl = tl;
     }
 
-    public boolean collidesWith(Vector oposition, int owidth, int oheight) {
-
-        if (position.x < oposition.x + owidth && position.x + WIDTH > oposition.x
-                && position.y < oposition.y + oheight && position.y + HEIGHT > oposition.y) {
-
-            return true;
-        }
-        return false;
-
-    }
+    
 
     @Override
-    public void render(GraphicsContext gc, long delta) {
+    public void render(GraphicsContext gc) {
 
           tl.DrawTile(gc, (int)(position.x - gp.cameraOffset), (int)position.y);
 //        gc.setFill(Color.BLACK);
