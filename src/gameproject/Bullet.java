@@ -39,6 +39,12 @@ public class Bullet extends Entity {
                 break;
             }
         }
+        for (Platform platform : gp.platforms) {
+            if (platform.collisionWith(this)) {
+                shouldDestroy = true;
+                break;
+            }
+        }
     }
 
     @Override

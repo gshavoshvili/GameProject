@@ -92,6 +92,10 @@ public class GameProject extends Application {
                 iter.remove();
         }
         
+        for (Enemy enemy : enemies) {
+            enemy.update(delta);
+        }
+        
         
 
         // camera offset
