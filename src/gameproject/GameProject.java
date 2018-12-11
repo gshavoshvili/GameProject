@@ -52,11 +52,16 @@ public class GameProject extends Application {
     
 
     MainCharacter hero = new MainCharacter(this, new Vector(285, 20), 30, 30);
-    Platform[] platforms = new Platform[]{
-        new Platform(this, new Vector(90, 250), 32, 32, new GrassTile()),
-        new Platform(this, new Vector(300, 360), 90, 30, new GrassTile()),
-        new Platform(this, new Vector(360, 300), 90, 30, new GrassTile()),
-        new Platform(this, new Vector(250, 120), 90, 30, new GrassTile())};
+//    Platform[] platforms = new Platform[]{
+//        new Platform(this, new Vector(90, 250), 32, 32, new GrassTile()),
+//        new Platform(this, new Vector(300, 360), 90, 30, new GrassTile()),
+//        new Platform(this, new Vector(360, 300), 90, 30, new GrassTile()),
+//        new Platform(this, new Vector(250, 120), 90, 30, new GrassTile())};
+    
+    public ArrayList<Platform> platforms = new ArrayList<>();
+    final void initPlatforms(){
+        
+    }
     
     public ArrayList<Enemy> enemies = new ArrayList<>();
     final void initEnemies(){
@@ -65,7 +70,9 @@ public class GameProject extends Application {
     
     public ArrayList<Bullet> bullets = new ArrayList<>();
     
-    //Tile tile;
+    //Tile tile
+//    TerrainGenerator tg = new TerrainGenerator();
+    
     
     int cameraOffset = 0;
 
@@ -73,8 +80,10 @@ public class GameProject extends Application {
         super();
         initInputs();
         initEnemies();
+        initPlatforms();
 //        tile = new GrassTile();
-
+        TerrainGenerator.drawFromString(this, gc, "gggggggggggggggggggg/!dddddddddddddddddddddd", 0, 332);
+        
     }
 
     public void update(long delta) {
@@ -105,10 +114,14 @@ public class GameProject extends Application {
         }
 
     }
+    
+    
 
     public void render(long delta) {
         gc.clearRect(0, 0, 600, 400);
-
+        
+        
+        
         hero.render(gc);
         for (Platform platform : platforms) {
             platform.render(gc);
@@ -120,8 +133,9 @@ public class GameProject extends Application {
             bullet.render(gc);
         }
         
+        
         //tile.DrawTile(gc);
-
+        
     }
     
     public void onMouseMove(MouseEvent e) {
