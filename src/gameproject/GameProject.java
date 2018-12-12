@@ -52,12 +52,7 @@ public class GameProject extends Application {
 
 
     public MainCharacter hero = new MainCharacter(this, new Vector(285, 20), 30, 30);
-    Platform[] platforms = new Platform[]{
-        new Platform(this, new Vector(90, 250), 32, 32, new GrassTile()),
-        new Platform(this, new Vector(300, 360), 90, 30, new GrassTile()),
-        new Platform(this, new Vector(360, 300), 90, 30, new GrassTile()),
-        new Platform(this, new Vector(250, 120), 90, 30, new GrassTile())};
-
+    public ArrayList<Platform> platforms = new ArrayList<>();
     public ArrayList<Enemy> enemies = new ArrayList<>();
     final void initEnemies(){
         enemies.add(new Enemy(this, new Vector(150, 250), 32, 32));
@@ -77,7 +72,6 @@ public class GameProject extends Application {
         super();
         initInputs();
         initEnemies();
-        initPlatforms();
         TerrainGenerator.drawFromString(this, gc, "gggggggggggggggggggg/!dddddddddddddddddddddd", 0, 332);
 
     }
