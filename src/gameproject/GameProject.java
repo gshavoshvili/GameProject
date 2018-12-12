@@ -52,11 +52,6 @@ public class GameProject extends Application {
     
 
     MainCharacter hero = new MainCharacter(this, new Vector(285, 20), 30, 30);
-//    Platform[] platforms = new Platform[]{
-//        new Platform(this, new Vector(90, 250), 32, 32, new GrassTile()),
-//        new Platform(this, new Vector(300, 360), 90, 30, new GrassTile()),
-//        new Platform(this, new Vector(360, 300), 90, 30, new GrassTile()),
-//        new Platform(this, new Vector(250, 120), 90, 30, new GrassTile())};
     
     public ArrayList<Platform> platforms = new ArrayList<>();
     final void initPlatforms(){
@@ -73,7 +68,7 @@ public class GameProject extends Application {
     //Tile tile
 //    TerrainGenerator tg = new TerrainGenerator();
     
-    
+    Background bck = new Background();
     int cameraOffset = 0;
 
     public GameProject() {
@@ -81,7 +76,6 @@ public class GameProject extends Application {
         initInputs();
         initEnemies();
         initPlatforms();
-//        tile = new GrassTile();
         TerrainGenerator.drawFromString(this, gc, "gggggggggggggggggggg/!dddddddddddddddddddddd", 0, 332);
         
     }
@@ -119,8 +113,8 @@ public class GameProject extends Application {
 
     public void render(long delta) {
         gc.clearRect(0, 0, 600, 400);
-        
-        
+        bck.drawBackground(gc);
+
         
         hero.render(gc);
         for (Platform platform : platforms) {
@@ -151,6 +145,7 @@ public class GameProject extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        
         Parent root = FXMLLoader.load(getClass().getResource("FXML_test.fxml"));
 
         Scene scene = new Scene(root, 600, 400);

@@ -32,12 +32,6 @@ public abstract class TileMap {
         this.y = y;
     }
     
-    
-    public boolean collision(){
-        return true;
-    }
-    
-    public abstract void Display();
 }
 
 
@@ -111,4 +105,5 @@ class WaterTile implements Tile{
 //        System.out.println("test");
         gc.drawImage(img,x,y);
     }
+    
 }
