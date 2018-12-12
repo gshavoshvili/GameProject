@@ -49,7 +49,7 @@ public class GameProject extends Application {
         inputMap.put("DIGIT1", false);
         inputMap.put("DIGIT2", false);
     }
-    
+
 
     public MainCharacter hero = new MainCharacter(this, new Vector(285, 20), 30, 30);
     Platform[] platforms = new Platform[]{
@@ -57,34 +57,37 @@ public class GameProject extends Application {
         new Platform(this, new Vector(300, 360), 90, 30, new GrassTile()),
         new Platform(this, new Vector(360, 300), 90, 30, new GrassTile()),
         new Platform(this, new Vector(250, 120), 90, 30, new GrassTile())};
-    
+
     public ArrayList<Enemy> enemies = new ArrayList<>();
     final void initEnemies(){
         enemies.add(new Enemy(this, new Vector(150, 250), 32, 32));
     };
-    
+
     public ArrayList<Bullet> bullets = new ArrayList<>();
-    
-    //Tile tile;
-    
+
+    //Tile tile
+//    TerrainGenerator tg = new TerrainGenerator();
+
     final double CANVAS_WIDTH = 600;
-    
+    Background bck = new Background();
+
     int cameraOffset = 0;
 
     public GameProject() {
         super();
         initInputs();
         initEnemies();
-//        tile = new GrassTile();
+        initPlatforms();
+        TerrainGenerator.drawFromString(this, gc, "gggggggggggggggggggg/!dddddddddddddddddddddd", 0, 332);
 
     }
 
     public void update(long delta) {
 
         hero.update(delta);
-        
+
         // Using iterator directly to avoid ConcurrentModificationException
-        
+
         Iterator<Bullet> iter = bullets.iterator();
 
         while (iter.hasNext()) {
@@ -93,12 +96,12 @@ public class GameProject extends Application {
             if (bullet.shouldDestroy)
                 iter.remove();
         }
-        
+
         for (Enemy enemy : enemies) {
             enemy.update(delta);
         }
-        
-        
+
+
 
         // camera offset
         cameraOffset = (int) hero.position.x - 285;
@@ -108,8 +111,12 @@ public class GameProject extends Application {
 
     }
 
+
+
     public void render(long delta) {
         gc.clearRect(0, 0, 600, 400);
+        bck.drawBackground(gc);
+
 
         hero.render(gc);
         for (Platform platform : platforms) {
@@ -121,17 +128,18 @@ public class GameProject extends Application {
         for (Bullet bullet : bullets) {
             bullet.render(gc);
         }
-        
+
+
         //tile.DrawTile(gc);
 
     }
-    
+
     public void onMouseMove(MouseEvent e) {
         // Move the method out to use for move AND drag
-        
+
             // TODO let angle be from hero center, not corner
             // TODO angle doesn't recalculate on jump or move
-            
+
             // don't forget camera offset for mouse position
             hero.mousePositionOnScreen = new Vector(e.getX(), e.getY());
             hero.calculateMouseAngle();
@@ -139,6 +147,7 @@ public class GameProject extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+
         Parent root = FXMLLoader.load(getClass().getResource("FXML_test.fxml"));
 
         Scene scene = new Scene(root, CANVAS_WIDTH, 400);
@@ -169,7 +178,7 @@ public class GameProject extends Application {
             System.out.println(code + " released");
             inputMap.replace(code, Boolean.FALSE);
         });
-        
+
         canvas.setOnMouseMoved((MouseEvent e)-> {
             onMouseMove(e);
         });
@@ -177,22 +186,22 @@ public class GameProject extends Application {
             onMouseMove(e);
         });
 
-        
+
         canvas.setOnMousePressed((MouseEvent e) -> {
             //TODO maybe keep momentum
             if (e.getButton() == MouseButton.PRIMARY) {
                 inputMap.put("LMB", true);
             }
-            
+
         });
-        
+
         canvas.setOnMouseReleased((MouseEvent e) -> {
             if (e.getButton() == MouseButton.PRIMARY) {
                 inputMap.put("LMB", false);
             }
-            
+
         });
-        
+
         AnimationTimer animator = new AnimationTimer() {
 
             @Override

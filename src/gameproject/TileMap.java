@@ -32,12 +32,6 @@ public abstract class TileMap {
         this.y = y;
     }
     
-    
-    public boolean collision(){
-        return true;
-    }
-    
-    public abstract void Display();
 }
 
 
@@ -72,11 +66,11 @@ class GrassTile implements Tile{
 class DirtTile implements Tile{
     
     Image img;
-    Logger logger = Logger.getLogger(GrassTile.class.getName());
+    Logger logger = Logger.getLogger(DirtTile.class.getName());
 
     DirtTile() {
         try {
-            BufferedImage capture = ImageIO.read(getClass().getResourceAsStream("resources/Grass.png"));
+            BufferedImage capture = ImageIO.read(getClass().getResourceAsStream("resources/Dirt.png"));
             this.img = SwingFXUtils.toFXImage(capture, null);
         } catch (IOException ex) {
             logger.info("Cant read image!!!");
@@ -94,11 +88,11 @@ class DirtTile implements Tile{
 class WaterTile implements Tile{
     
      Image img;
-    Logger logger = Logger.getLogger(GrassTile.class.getName());
+    Logger logger = Logger.getLogger(WaterTile.class.getName());
 
     WaterTile() {
         try {
-            BufferedImage capture = ImageIO.read(getClass().getResourceAsStream("resources/Grass.png"));
+            BufferedImage capture = ImageIO.read(getClass().getResourceAsStream("resources/Water.png"));
             this.img = SwingFXUtils.toFXImage(capture, null);
         } catch (IOException ex) {
             logger.info("Cant read image!!!");
@@ -111,4 +105,5 @@ class WaterTile implements Tile{
 //        System.out.println("test");
         gc.drawImage(img,x,y);
     }
+    
 }

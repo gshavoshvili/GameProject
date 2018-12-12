@@ -19,7 +19,6 @@ public class Platform extends Entity {
         super(gp, position, width, height);
         this.tl = tl;
     }
-
     
 
     @Override
@@ -31,4 +30,8 @@ public class Platform extends Entity {
 
     }
 
+    
+
+    
+    
 }
