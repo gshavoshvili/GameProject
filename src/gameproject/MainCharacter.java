@@ -24,7 +24,7 @@ public class MainCharacter extends Character {
     Vector mousePositionOnScreen = new Vector(0,0);
     
     
-    Gun[] guns = { new Pistol(), new Automatic() };
+    Gun[] guns = { new Pistol(this), new Automatic(this) };
     
 
     MainCharacter(GameProject gp, Vector position, int width, int height) {
@@ -41,7 +41,17 @@ public class MainCharacter extends Character {
     }
     
     
-
+    @Override
+    public Direction  shouldMoveHor() {
+        if (inputMap.get("A") && !inputMap.get("D")) {
+            return Direction.LEFT;
+        }
+        if (inputMap.get("D") && !inputMap.get("A")) {
+            return Direction.RIGHT;
+        }
+        return Direction.NONE;
+    }
+    
     @Override
     void jump() {
         if (inputMap.get("SPACE")) {
@@ -68,6 +78,7 @@ public class MainCharacter extends Character {
         }
     }
     
+    @Override
     boolean shouldShoot() {
         return inputMap.get("LMB");
     }
@@ -85,7 +96,7 @@ public class MainCharacter extends Character {
 
     @Override
     void die() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("DEAD");
     }
 
 }

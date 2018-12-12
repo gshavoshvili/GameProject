@@ -51,7 +51,7 @@ public class GameProject extends Application {
     }
     
 
-    MainCharacter hero = new MainCharacter(this, new Vector(285, 20), 30, 30);
+    public MainCharacter hero = new MainCharacter(this, new Vector(285, 20), 30, 30);
     Platform[] platforms = new Platform[]{
         new Platform(this, new Vector(90, 250), 32, 32, new GrassTile()),
         new Platform(this, new Vector(300, 360), 90, 30, new GrassTile()),
@@ -66,6 +66,8 @@ public class GameProject extends Application {
     public ArrayList<Bullet> bullets = new ArrayList<>();
     
     //Tile tile;
+    
+    final double CANVAS_WIDTH = 600;
     
     int cameraOffset = 0;
 
@@ -139,7 +141,7 @@ public class GameProject extends Application {
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("FXML_test.fxml"));
 
-        Scene scene = new Scene(root, 600, 400);
+        Scene scene = new Scene(root, CANVAS_WIDTH, 400);
 
         stage.setTitle("FXML Welcome");
         stage.setScene(scene);

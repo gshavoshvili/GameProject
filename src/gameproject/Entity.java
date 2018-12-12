@@ -41,6 +41,12 @@ public abstract class Entity {
     public Vector getCenter() {
         return position.add(new Vector(WIDTH/2,HEIGHT/2));
     }
+    
+    public double distanceTo(Entity entity) {
+        Vector center = getCenter();
+        Vector oCenter = entity.getCenter();
+        return Math.sqrt(Math.pow(center.x - oCenter.x, 2) + Math.pow(center.y - oCenter.y, 2));
+    }
 
     abstract void render(GraphicsContext gc);
 

@@ -5,6 +5,7 @@
  */
 package gameproject;
 
+import gameproject.GameProject.Direction;
 import gameproject.guns.Pistol;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -18,11 +19,13 @@ public class Enemy extends Character {
     
     public Enemy(GameProject gp, Vector position, int width, int height) {
         super(gp, position, width, height);
-        gun = new Pistol();
+        gun = new Pistol(this);
         health = 5;
     }
 
-    
+    public Direction shouldMoveHor() {
+        return Direction.NONE;
+    }
 
     @Override
     void die() {
@@ -37,7 +40,15 @@ public class Enemy extends Character {
 
     @Override
     boolean shouldShoot() {
-        return false;
+        System.out.println(distanceTo(gp.hero));
+        return Math.abs(this.getCenter().x - gp.hero.getCenter().x) < gp.CANVAS_WIDTH/2;
     }
+
+    @Override
+    void calculateAngle() {
+        targetAngle = Vector.angleBetween(position, gp.hero.position);
+    }
+    
+    
     
 }

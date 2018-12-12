@@ -14,29 +14,39 @@ import javafx.scene.paint.Color;
  */
 public class Bullet extends Entity {
 
-    
-    final static Vector initialDelta = new Vector (10,0);
-    Vector deltaV; 
-    
+    Entity shooter;
+
+    final static Vector initialDelta = new Vector(10, 0);
+    Vector deltaV;
+
     boolean shouldDestroy = false;
-    
-    public Bullet(GameProject gp, Vector position, int width, int height, double angle) {
+
+    public Bullet(GameProject gp, Entity shooter, Vector position, int width, int height, double angle) {
         super(gp, position, width, height);
+        this.shooter = shooter;
         this.deltaV = initialDelta.rotate(angle);
     }
-    
+
     void destroy() {
         gp.bullets.remove(this);
     }
 
     void update(long delta) {
         position = position.add(deltaV);
-        
-        for (Enemy enemy : gp.enemies) {
-            if (enemy.collisionWith(this)) {
-                enemy.damage(3);
+
+        if (shooter instanceof MainCharacter) {
+            for (Enemy enemy : gp.enemies) {
+                if (enemy.collisionWith(this)) {
+                    enemy.damage(3);
+                    shouldDestroy = true;
+                    break;
+                }
+            }
+        }
+        else {
+            if (gp.hero.collisionWith(this)) {
+                gp.hero.damage(3);
                 shouldDestroy = true;
-                break;
             }
         }
         for (Platform platform : gp.platforms) {

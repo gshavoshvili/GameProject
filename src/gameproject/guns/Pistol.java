@@ -6,7 +6,9 @@
 package gameproject.guns;
 
 import gameproject.Bullet;
+import gameproject.Entity;
 import gameproject.GameProject;
+import gameproject.MainCharacter;
 import gameproject.Vector;
 
 /**
@@ -15,13 +17,20 @@ import gameproject.Vector;
  */
 public class Pistol extends Gun {
 
-    public Pistol() {
-        this.timeout = 300;
+    public Pistol(Entity owner) {
+        this.owner = owner;
+        if (owner instanceof MainCharacter) {
+            this.timeout = 300;
+        }
+        else {
+            this.timeout = 1000;
+        }
+        
     }
 
     @Override
     void shoot(GameProject gp, Vector from, double targetAngle) {
-        gp.bullets.add(new Bullet(gp, from, 30, 30, targetAngle));
+        gp.bullets.add(new Bullet(gp, owner, from, 30, 30, targetAngle));
     }
 
 }

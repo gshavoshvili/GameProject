@@ -5,6 +5,7 @@
  */
 package gameproject.guns;
 
+import gameproject.Entity;
 import gameproject.GameProject;
 import gameproject.Vector;
 
@@ -14,6 +15,8 @@ import gameproject.Vector;
  */
 public abstract class Gun {
 
+    Entity owner;
+    
     int timeout; //ms
     long lastShot = 0;
 

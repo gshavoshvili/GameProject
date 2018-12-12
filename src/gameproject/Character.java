@@ -5,6 +5,7 @@
  */
 package gameproject;
 
+import gameproject.GameProject.Direction;
 import gameproject.guns.Gun;
 import java.util.Map;
 import javafx.scene.canvas.GraphicsContext;
@@ -58,16 +59,18 @@ public abstract class Character extends Entity{
         gun.tryShoot(gp, position, targetAngle);
     }
     
+    public abstract Direction shouldMoveHor();
+    
     
     void horMove(long delta) {
         
-        
+        Direction shouldMove = shouldMoveHor();
 
-        if (inputMap.get("A") && !inputMap.get("D")) {
+        if (shouldMove == Direction.LEFT) {
             
             position.x -= HOR_SPEED;
             movedToHor = GameProject.Direction.LEFT;
-        } else if (inputMap.get("D") && !inputMap.get("A")) {
+        } else if (shouldMove == Direction.RIGHT) {
             
             position.x += HOR_SPEED;
             movedToHor = GameProject.Direction.RIGHT;
@@ -145,9 +148,7 @@ public abstract class Character extends Entity{
         
     };
     
-    void calculateAngle() {
-        
-    }
+    abstract void calculateAngle();
     
     
     
