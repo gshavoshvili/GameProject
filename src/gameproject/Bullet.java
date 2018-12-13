@@ -7,7 +7,12 @@ package gameproject;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-
+import javafx.scene.image.Image;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.logging.Logger;
+import javafx.embed.swing.SwingFXUtils;
 /**
  *
  * @author User
@@ -21,11 +26,23 @@ public class Bullet extends Entity {
 
     boolean shouldDestroy = false;
 
+    Image img;
+    Logger logger = Logger.getLogger(Bullet.class.getName());
+        
+    
     public Bullet(GameProject gp, Entity shooter, Vector position, int width, int height, double angle) {
         super(gp, position, width, height);
         this.shooter = shooter;
         this.deltaV = initialDelta.rotate(angle);
-    }
+        
+        
+            try {
+                BufferedImage capture = ImageIO.read(getClass().getResourceAsStream("resources/Bullet.png"));
+                this.img = SwingFXUtils.toFXImage(capture, null);
+            } catch (IOException ex) {
+                logger.info("Cant read image!!!");
+            }
+        }
 
     void destroy() {
         gp.bullets.remove(this);
@@ -59,8 +76,9 @@ public class Bullet extends Entity {
 
     @Override
     void render(GraphicsContext gc) {
-        gc.setFill(Color.BLACK);
-        gc.fillOval(position.x - gp.cameraOffset, position.y, WIDTH, HEIGHT);
+//        gc.setFill(Color.BLACK);
+//        gc.fillOval(position.x - gp.cameraOffset, position.y, WIDTH, HEIGHT);
+          gc.drawImage(img, position.x, position.y);
     }
 
 }
