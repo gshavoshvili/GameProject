@@ -38,6 +38,12 @@ public class GameProject extends Application {
     public enum Direction {
         LEFT, RIGHT, NONE
     }
+    
+    public enum GameState {
+        RUNNING, DIED, WON
+    }
+    
+    public GameState state = GameState.RUNNING;
 
     Map<String, Boolean> inputMap = new HashMap<>();
     GraphicsContext gc;
@@ -81,7 +87,7 @@ public class GameProject extends Application {
     }
 
     public void update(long delta) {
-
+        
         hero.update(delta);
 
         // Using iterator directly to avoid ConcurrentModificationException
@@ -116,7 +122,9 @@ public class GameProject extends Application {
         bck.drawBackground(gc);
 
 
-        hero.render(gc);
+        if ( state != state.DIED ) {
+            hero.render(gc);
+        }
         for (Platform platform : platforms) {
             platform.render(gc);
         }
@@ -204,9 +212,10 @@ public class GameProject extends Application {
 
             @Override
             public void handle(long arg0) {
-
-                update(arg0);
-
+                if (state == GameState.RUNNING){
+                    update(arg0);
+                }
+                
                 render(arg0);
 
             }

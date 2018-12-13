@@ -6,6 +6,7 @@
 package gameproject;
 
 import gameproject.GameProject.Direction;
+import gameproject.GameProject.GameState;
 import gameproject.guns.Automatic;
 import gameproject.guns.Gun;
 import gameproject.guns.Pistol;
@@ -30,6 +31,7 @@ public class MainCharacter extends Character {
     MainCharacter(GameProject gp, Vector position, int width, int height) {
         super(gp, position, width, height);
         gun = guns[0];
+        health = 30;
     }
     
     
@@ -96,7 +98,8 @@ public class MainCharacter extends Character {
 
     @Override
     public void die() {
-        System.out.println("DEAD");
+        gp.state = GameState.DIED;
+        
     }
 
 }

@@ -8,6 +8,7 @@ package gameproject.enemies;
 import gameproject.Character;
 import gameproject.GameProject;
 import gameproject.GameProject.Direction;
+import gameproject.GameProject.GameState;
 import gameproject.Vector;
 import gameproject.enemies.states.Idle;
 import gameproject.enemies.states.State;
@@ -38,6 +39,9 @@ public abstract class Enemy extends Character {
     @Override
     public void die() {
         gp.enemies.remove(this);
+        if(gp.enemies.size() == 0) {
+            gp.state = GameState.WON;
+        }
     }
     
     @Override
