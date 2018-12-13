@@ -131,13 +131,9 @@ public abstract class Character extends Entity{
         onGround = false;
         Entity colWith = collisionWith();
 
-        /* if (position.y > 400 - HEIGHT) {
-            position.y = 400 - HEIGHT;
-            vert_acceleration = 0;
-            onGround = true;
-        } else {
-            onGround = false;
-        } */
+        if (position.y > 400) {
+            die();
+        } 
 
         
 

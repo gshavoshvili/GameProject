@@ -159,9 +159,15 @@ public class GameProject extends Application {
 
         Parent root = FXMLLoader.load(getClass().getResource("FXML_test.fxml"));
 
+       
+        
+        
         Scene scene = new Scene(root, CANVAS_WIDTH, 400);
 
-        stage.setTitle("FXML Welcome");
+        stage.setTitle("GameProject");
+        stage.setMaxWidth(CANVAS_WIDTH);
+        stage.setMaxHeight(400);
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
 
