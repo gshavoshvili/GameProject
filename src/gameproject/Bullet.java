@@ -23,15 +23,17 @@ public class Bullet extends Entity {
 
     final static Vector initialDelta = new Vector(10, 0);
     Vector deltaV;
-
+    
+    
+    
     boolean shouldDestroy = false;
 
     Image img;
     Logger logger = Logger.getLogger(Bullet.class.getName());
         
     
-    public Bullet(GameProject gp, Entity shooter, Vector position, int width, int height, double angle) {
-        super(gp, position, width, height);
+    public Bullet(GameProject gp, Entity shooter, Vector position, double angle) {
+        super(gp, position, 25, 25);
         this.shooter = shooter;
         this.deltaV = initialDelta.rotate(angle);
         
@@ -78,7 +80,7 @@ public class Bullet extends Entity {
     void render(GraphicsContext gc) {
 //        gc.setFill(Color.BLACK);
 //        gc.fillOval(position.x - gp.cameraOffset, position.y, WIDTH, HEIGHT);
-          gc.drawImage(img, position.x, position.y);
+          gc.drawImage(img, position.x - gp.cameraOffset, position.y);
     }
 
 }

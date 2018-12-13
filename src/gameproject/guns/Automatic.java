@@ -24,6 +24,6 @@ public class Automatic extends Gun {
 
     @Override
     void shoot(GameProject gp, Vector from, double targetAngle) {
-        gp.bullets.add(new Bullet(gp, owner, from, 30, 30, targetAngle));
+        gp.bullets.add(new Bullet(gp, owner, from, targetAngle));
     }
 }
