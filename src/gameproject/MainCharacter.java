@@ -53,7 +53,7 @@ public class MainCharacter extends Character {
     }
     
     @Override
-    void jump() {
+    public void jump() {
         if (inputMap.get("SPACE")) {
             if (onGround) {
                 vert_acceleration += JUMP_ACCELERATION;
@@ -62,7 +62,7 @@ public class MainCharacter extends Character {
     }
     
     @Override
-    void changeGun() {
+    public void changeGun() {
         if (inputMap.get("DIGIT1")) {
             gun = guns[0];
         }
@@ -72,14 +72,14 @@ public class MainCharacter extends Character {
     }
     
     @Override
-    void calculateAngle() {
+    public void calculateAngle() {
         if (movedToHor != Direction.NONE || movedVert) {
             calculateMouseAngle();
         }
     }
     
     @Override
-    boolean shouldShoot() {
+    public boolean shouldShoot() {
         return inputMap.get("LMB");
     }
     
@@ -95,7 +95,7 @@ public class MainCharacter extends Character {
     }
 
     @Override
-    void die() {
+    public void die() {
         System.out.println("DEAD");
     }
 

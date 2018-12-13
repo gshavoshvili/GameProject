@@ -13,12 +13,12 @@ import javafx.scene.canvas.GraphicsContext;
  */
 public abstract class Entity {
 
-    GameProject gp;
+    public GameProject gp;
 
-    Vector position;
+    public Vector position;
 
-    final int WIDTH;
-    final int HEIGHT;
+    public final int WIDTH;
+    public final int HEIGHT;
 
     Entity(GameProject gp, Vector position, int width, int height) {
         this.gp = gp;

@@ -18,7 +18,7 @@ public abstract class Character extends Entity{
     
     Map<String, Boolean> inputMap;
     
-    Gun gun;
+    public Gun gun;
    
     final int GRAV_ACCELERATION = 1;
     final int JUMP_ACCELERATION = -15;
@@ -31,27 +31,27 @@ public abstract class Character extends Entity{
 
     final int HOR_SPEED = 4;
     
-    double targetAngle;
+    public double targetAngle;
     
-    int health;
+    public int health;
     
     
     
-    Character(GameProject gp, Vector position, int width, int height) {
+    public Character(GameProject gp, Vector position, int width, int height) {
         super(gp, position, width, height);
         inputMap = gp.inputMap;
     }
     
-    abstract void die();
+    public abstract void die();
     
-    void damage(int dmg) {
+    public void damage(int dmg) {
         health -= dmg; 
         if (health<=0) {
             die();
         }
     }
     
-    abstract boolean shouldShoot();
+    public abstract boolean shouldShoot();
     
     
     
@@ -62,7 +62,7 @@ public abstract class Character extends Entity{
     public abstract Direction shouldMoveHor();
     
     
-    void horMove(long delta) {
+    public void horMove(long delta) {
         
         Direction shouldMove = shouldMoveHor();
 
@@ -97,11 +97,11 @@ public abstract class Character extends Entity{
         }
     }
     
-    void jump() {
+    public void jump() {
         
     }
     
-    void vertMove(long delta) {
+    public void vertMove(long delta) {
         movedVert = false;
         vert_acceleration += GRAV_ACCELERATION;
         
@@ -144,15 +144,15 @@ public abstract class Character extends Entity{
         
     }
     
-    void changeGun() {
+    public void changeGun() {
         
     };
     
-    abstract void calculateAngle();
+    public abstract void calculateAngle();
     
     
     
-    final void update(long delta) {
+    public final void update(long delta) {
         changeGun();
         horMove(delta);
         vertMove(delta);
@@ -167,6 +167,6 @@ public abstract class Character extends Entity{
     };
     
     @Override
-    abstract void render(GraphicsContext gc);
+    public abstract void render(GraphicsContext gc);
     
 }

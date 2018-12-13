@@ -5,6 +5,7 @@
  */
 package gameproject.guns;
 
+import gameproject.Bullet;
 import gameproject.Entity;
 import gameproject.GameProject;
 import gameproject.Vector;
@@ -17,16 +18,36 @@ public abstract class Gun {
 
     Entity owner;
     
+    
     int timeout; //ms
     long lastShot = 0;
-
+    
+    // needed for enemy automatic
+    long lastBurst = 0;
+    int burstTimeout = 0;
+    int bulletsShot = 0;
+    final int MAX_BURST_SHOTS = 3;
+    
+    double spread; // angle in radians
+    
+    
     public void tryShoot(GameProject gp, Vector from, double targetAngle) {
         long currTime = System.currentTimeMillis();
-        if (currTime - lastShot > timeout) {
+        if (currTime - lastShot > timeout && ( bulletsShot>0 || currTime - lastBurst > burstTimeout)) {
             shoot(gp, from, targetAngle);
             lastShot = currTime;
+            bulletsShot++;
+            bulletsShot%=MAX_BURST_SHOTS;
+            if (bulletsShot == 0){
+                lastBurst = currTime;
+            }
         }
     }
 
-    abstract void shoot(GameProject gp, Vector from, double targetAngle);
+    
+    final void shoot(GameProject gp, Vector from, double targetAngle) {
+        targetAngle -= spread/2;
+        targetAngle += Math.random() * spread;
+        gp.bullets.add(new Bullet(gp, owner, from, targetAngle));
+    }
 }

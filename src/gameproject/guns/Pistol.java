@@ -19,18 +19,18 @@ public class Pistol extends Gun {
 
     public Pistol(Entity owner) {
         this.owner = owner;
+        
         if (owner instanceof MainCharacter) {
             this.timeout = 300;
+            this.spread = 0.2;
         }
         else {
             this.timeout = 1000;
+            this.spread = 0.5;
         }
         
     }
 
-    @Override
-    void shoot(GameProject gp, Vector from, double targetAngle) {
-        gp.bullets.add(new Bullet(gp, owner, from, targetAngle));
-    }
+    
 
 }

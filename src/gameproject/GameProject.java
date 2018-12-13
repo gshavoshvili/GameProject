@@ -5,6 +5,9 @@
  */
 package gameproject;
 
+import gameproject.enemies.Enemy;
+import gameproject.enemies.OrangeEnemy;
+import gameproject.enemies.RedEnemy;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -32,7 +35,7 @@ import javafx.stage.Stage;
  */
 public class GameProject extends Application {
 
-    enum Direction {
+    public enum Direction {
         LEFT, RIGHT, NONE
     }
 
@@ -55,7 +58,8 @@ public class GameProject extends Application {
     public ArrayList<Platform> platforms = new ArrayList<>();
     public ArrayList<Enemy> enemies = new ArrayList<>();
     final void initEnemies(){
-        enemies.add(new Enemy(this, new Vector(150, 250), 32, 32));
+        enemies.add(new RedEnemy(this, new Vector(150, 250), 32, 32));
+        enemies.add(new OrangeEnemy(this, new Vector(400, 250), 32, 64));
     };
 
     public ArrayList<Bullet> bullets = new ArrayList<>();
@@ -63,10 +67,10 @@ public class GameProject extends Application {
     //Tile tile
 //    TerrainGenerator tg = new TerrainGenerator();
 
-    final double CANVAS_WIDTH = 600;
+    public final double CANVAS_WIDTH = 600;
     Background bck = new Background();
 
-    int cameraOffset = 0;
+    public int cameraOffset = 0;
 
     public GameProject() {
         super();
