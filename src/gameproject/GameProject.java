@@ -63,15 +63,10 @@ public class GameProject extends Application {
     public MainCharacter hero = new MainCharacter(this, new Vector(285, 20), 30, 30);
     public ArrayList<Platform> platforms = new ArrayList<>();
     public ArrayList<Enemy> enemies = new ArrayList<>();
-    final void initEnemies(){
-        enemies.add(new RedEnemy(this, new Vector(620, 250)));
-        enemies.add(new OrangeEnemy(this, new Vector(400, 250)));
-    };
+
 
     public ArrayList<Bullet> bullets = new ArrayList<>();
 
-    //Tile tile
-//    TerrainGenerator tg = new TerrainGenerator();
 
     public final double CANVAS_WIDTH = 600;
     Background bck = new Background();
@@ -81,11 +76,11 @@ public class GameProject extends Application {
     public GameProject() {
         super();
         initInputs();
-        initEnemies();
         TerrainGenerator.drawFromString(this, gc, 
-                  "gggggggggggggggggggg/"
-                + "!dddddddddddddddddddddd"
-                , 0, 332);
+                  "-------------/"
+                + "ggggggg------ggggggggggggg/"
+                + "ddddddd------ddddddddddddddd"
+                , 0, 300);
 
     }
 
