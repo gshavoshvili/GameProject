@@ -9,6 +9,8 @@ import gameproject.Character;
 import gameproject.GameProject;
 import gameproject.GameProject.Direction;
 import gameproject.Vector;
+import gameproject.enemies.states.Idle;
+import gameproject.enemies.states.State;
 import gameproject.guns.Pistol;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -21,14 +23,16 @@ public abstract class Enemy extends Character {
     
     
     Color color;
+    public State state;
     
     public Enemy(GameProject gp, Vector position, int width, int height) {
         super(gp, position, width, height);
+        this.state = new Idle(this);
     }
 
     @Override
     public Direction shouldMoveHor() {
-        return Direction.NONE;
+        return state.shouldMoveHor();
     }
 
     @Override
@@ -44,8 +48,7 @@ public abstract class Enemy extends Character {
 
     @Override
     public boolean shouldShoot() {
-        System.out.println(distanceTo(gp.hero));
-        return Math.abs(this.getCenter().x - gp.hero.getCenter().x) < gp.CANVAS_WIDTH/2;
+        return state.shouldShoot();
     }
 
     @Override

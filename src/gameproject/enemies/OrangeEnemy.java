@@ -16,10 +16,15 @@ import javafx.scene.paint.Color;
  * @author User
  */
 public class OrangeEnemy extends Enemy{
+    
+    
+    
      public OrangeEnemy(GameProject gp, Vector position, int width, int height) {
         super(gp, position, width, height);
         gun = new Automatic(this);
         health = 15;
         color = Color.ORANGE;
+        this.horSpeed=2;
+        
     }
 }

@@ -6,6 +6,7 @@
 package gameproject;
 
 import gameproject.GameProject.Direction;
+import gameproject.enemies.Enemy;
 import gameproject.guns.Gun;
 import java.util.Map;
 import javafx.scene.canvas.GraphicsContext;
@@ -27,9 +28,9 @@ public abstract class Character extends Entity{
     boolean movedVert = false;
     boolean onGround = false;
     GameProject.Direction movedToHor = GameProject.Direction.NONE;
-    Platform collisionWith = null;
+   
 
-    final int HOR_SPEED = 4;
+    protected int horSpeed = 4;
     
     public double targetAngle;
     
@@ -61,6 +62,30 @@ public abstract class Character extends Entity{
     
     public abstract Direction shouldMoveHor();
     
+    Entity collisionWith() {
+       
+        for (Platform pl : gp.platforms) {
+            if (pl.collisionWith(this)) {
+                return pl;
+            }
+        }
+        
+            for (Enemy en : gp.enemies) {
+            if (en != this && en.collisionWith(this)) {
+                return en;
+               
+            }
+        }
+        
+        
+            if (gp.hero != this && gp.hero.collisionWith(this)) {
+                return gp.hero;
+                
+        
+        }
+            return null;
+    }
+    
     
     public void horMove(long delta) {
         
@@ -68,30 +93,25 @@ public abstract class Character extends Entity{
 
         if (shouldMove == Direction.LEFT) {
             
-            position.x -= HOR_SPEED;
+            position.x -= horSpeed;
             movedToHor = GameProject.Direction.LEFT;
         } else if (shouldMove == Direction.RIGHT) {
             
-            position.x += HOR_SPEED;
+            position.x += horSpeed;
             movedToHor = GameProject.Direction.RIGHT;
         }
         
         // TODO: Only if moved?
-        collisionWith = null;
-        for (Platform pl : gp.platforms) {
-            if (pl.collisionWith(this)) {
-                collisionWith = pl;
-                // System.out.println("Horizontal collision: " + position.x + " " + position.y + " " + collisionWith.position.x + " " + collisionWith.position.y);
-                break;
-            }
-        }
-
-        if (collisionWith != null) {
+        
+        
+        Entity colWith = collisionWith();
+        
+        if (colWith != null) {
             
             if (movedToHor == GameProject.Direction.LEFT) {
-                position.x = collisionWith.position.x + collisionWith.WIDTH;
+                position.x = colWith.position.x + colWith.WIDTH;
             } else {
-                position.x = collisionWith.position.x - WIDTH;
+                position.x = colWith.position.x - WIDTH;
             }
             movedToHor = GameProject.Direction.NONE;
         }
@@ -109,30 +129,24 @@ public abstract class Character extends Entity{
         position.y += vert_acceleration;
 
         onGround = false;
-        collisionWith = null;
+        Entity colWith = collisionWith();
 
-        if (position.y > 400 - HEIGHT) {
+        /* if (position.y > 400 - HEIGHT) {
             position.y = 400 - HEIGHT;
             vert_acceleration = 0;
             onGround = true;
         } else {
             onGround = false;
-        }
+        } */
 
-        for (Platform pl : gp.platforms) {
-            if (pl.collisionWith(this)) {
-                collisionWith = pl;
-                // System.out.println("Vertical collision: " + position.x + " " + position.y + " " + collisionWith.position.x + " " + collisionWith.position.y);
-                break;
-            }
-        }
+        
 
-        if (collisionWith != null) {
+        if (colWith != null) {
             if (vert_acceleration < 0) {
                 // was moving up
-                position.y = collisionWith.position.y + collisionWith.HEIGHT;
+                position.y = colWith.position.y + colWith.HEIGHT;
             } else {
-                position.y = collisionWith.position.y - HEIGHT;
+                position.y = colWith.position.y - HEIGHT;
                 onGround = true;
                 //System.out.println(position.y);
             }

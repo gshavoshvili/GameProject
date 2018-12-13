@@ -58,7 +58,7 @@ public class GameProject extends Application {
     public ArrayList<Platform> platforms = new ArrayList<>();
     public ArrayList<Enemy> enemies = new ArrayList<>();
     final void initEnemies(){
-        enemies.add(new RedEnemy(this, new Vector(150, 250), 32, 32));
+        enemies.add(new RedEnemy(this, new Vector(620, 250), 32, 32));
         enemies.add(new OrangeEnemy(this, new Vector(400, 250), 32, 64));
     };
 
