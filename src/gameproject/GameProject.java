@@ -169,9 +169,6 @@ public class GameProject extends Application {
         Scene scene = new Scene(root, CANVAS_WIDTH, 400);
 
         stage.setTitle("GameProject");
-        stage.setMaxWidth(CANVAS_WIDTH);
-        stage.setMaxHeight(400);
-        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
 
