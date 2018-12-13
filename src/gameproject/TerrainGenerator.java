@@ -39,10 +39,12 @@ public class TerrainGenerator {
                     case 'r':
                         gameproject.enemies.RedEnemy redEnemy = new gameproject.enemies.RedEnemy(gp, new Vector(xCount, yCount));
                         gp.enemies.add(redEnemy);
+                        xCount += 32;
                         break;
                     case 'o':
                         gameproject.enemies.OrangeEnemy orangeEnemy = new gameproject.enemies.OrangeEnemy(gp, new Vector(xCount, yCount));
                         gp.enemies.add(orangeEnemy);
+                        xCount += 32;
                         break;
                 }
             }
