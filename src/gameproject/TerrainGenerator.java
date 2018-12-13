@@ -17,9 +17,9 @@ public class TerrainGenerator {
                 switch(ch){
                     case '-': xCount += 32;
                         break;
-                    case '/': yCount += 32;
-                        break;
-                    case '!' : xCount = 0;
+                    case '/': 
+                        yCount += 32;
+                        xCount = 0;
                         break;
                     case 'g': 
                         gameproject.Platform grass = new gameproject.Platform(gp, new Vector(xCount, yCount), 32, 32, new GrassTile());
@@ -34,6 +34,16 @@ public class TerrainGenerator {
                     case 'w': 
                         gameproject.Platform water = new gameproject.Platform(gp, new Vector(xCount, yCount), 32, 32, new WaterTile());
                         gp.platforms.add(water);
+                        xCount += 32;
+                        break;
+                    case 'r':
+                        gameproject.enemies.RedEnemy redEnemy = new gameproject.enemies.RedEnemy(gp, new Vector(xCount, yCount));
+                        gp.enemies.add(redEnemy);
+                        xCount += 32;
+                        break;
+                    case 'o':
+                        gameproject.enemies.OrangeEnemy orangeEnemy = new gameproject.enemies.OrangeEnemy(gp, new Vector(xCount, yCount));
+                        gp.enemies.add(orangeEnemy);
                         xCount += 32;
                         break;
                 }
