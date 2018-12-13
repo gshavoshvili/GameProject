@@ -19,8 +19,8 @@ public class OrangeEnemy extends Enemy{
     
     
     
-     public OrangeEnemy(GameProject gp, Vector position, int width, int height) {
-        super(gp, position, width, height);
+     public OrangeEnemy(GameProject gp, Vector position) {
+        super(gp, position, 32, 64);
         gun = new Automatic(this);
         health = 15;
         color = Color.ORANGE;

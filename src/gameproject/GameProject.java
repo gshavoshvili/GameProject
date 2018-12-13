@@ -64,8 +64,8 @@ public class GameProject extends Application {
     public ArrayList<Platform> platforms = new ArrayList<>();
     public ArrayList<Enemy> enemies = new ArrayList<>();
     final void initEnemies(){
-        enemies.add(new RedEnemy(this, new Vector(620, 250), 32, 32));
-        enemies.add(new OrangeEnemy(this, new Vector(400, 250), 32, 64));
+        enemies.add(new RedEnemy(this, new Vector(620, 250)));
+        enemies.add(new OrangeEnemy(this, new Vector(400, 250)));
     };
 
     public ArrayList<Bullet> bullets = new ArrayList<>();
@@ -82,7 +82,10 @@ public class GameProject extends Application {
         super();
         initInputs();
         initEnemies();
-        TerrainGenerator.drawFromString(this, gc, "gggggggggggggggggggg/!dddddddddddddddddddddd", 0, 332);
+        TerrainGenerator.drawFromString(this, gc, 
+                  "gggggggggggggggggggg/"
+                + "!dddddddddddddddddddddd"
+                , 0, 332);
 
     }
 

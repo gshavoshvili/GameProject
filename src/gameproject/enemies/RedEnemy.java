@@ -19,8 +19,8 @@ public class RedEnemy extends Enemy{
     
     
     
-    public RedEnemy(GameProject gp, Vector position, int width, int height) {
-        super(gp, position, width, height);
+    public RedEnemy(GameProject gp, Vector position) {
+        super(gp, position, 32, 32);
         gun = new Pistol(this);
         health = 6;
         color = Color.RED;
