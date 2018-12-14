@@ -8,12 +8,15 @@ package gameproject;
 import gameproject.enemies.Enemy;
 import gameproject.enemies.OrangeEnemy;
 import gameproject.enemies.RedEnemy;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -22,12 +25,14 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -71,9 +76,15 @@ public class GameProject extends Application {
     public final double CANVAS_WIDTH = 600;
     Background bck = new Background();
 
+    BufferedImage winImg;
+    BufferedImage deathImg;
+    
+    Image winScreen;
+    Image deathScreen;
+    
     public int cameraOffset = 0;
 
-    public GameProject() {
+    public GameProject() throws IOException {
         super();
         initInputs();
         TerrainGenerator.drawFromString(this, gc, 
@@ -90,7 +101,15 @@ public class GameProject extends Application {
                 + "gggggggggggggggggggggggggggggggggggggggggg-----------------gggggg-------gggggggggggggggggggggggggggggg---------------gggggggggggggggggggggggggggggggggggggggggggggggggggg/"
                 + "dddddddddddddddddddddddddddddddddddddddddd---------------------------dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
                 , 0, 400 - 12*32);
-
+        
+        
+        
+        winImg = ImageIO.read(getClass().getResourceAsStream("resources/Win.png"));
+        deathImg = ImageIO.read(getClass().getResourceAsStream("resources/You-Died.jpg"));
+        
+        winScreen = SwingFXUtils.toFXImage(winImg, null);
+        deathScreen = SwingFXUtils.toFXImage(deathImg, null);
+        
     }
 
     public void update(long delta) {
@@ -123,7 +142,9 @@ public class GameProject extends Application {
 
     }
 
-
+    public double alpha = 0;
+    public double alphaDeltaDeath = 0.01;
+    public double alphaDeltaWin = 0.04;
 
     public void render(long delta) {
         gc.clearRect(0, 0, 600, 400);
@@ -146,10 +167,19 @@ public class GameProject extends Application {
         if ( state != state.DIED ) {
             hero.render(gc);
         }else{
-            DeathWinScreen dws = new DeathWinScreen(this, gc, "Death");
+                gc.save();
+                gc.setGlobalAlpha(alpha);
+                gc.drawImage(deathScreen, 0, 0);
+                gc.restore();
+                if (alpha < 1) alpha += alphaDeltaDeath;
+                
         }
         if( state == state.WON ){
-            DeathWinScreen dws = new DeathWinScreen(this, gc, "Win");
+                gc.save();
+                gc.setGlobalAlpha(alpha);
+                gc.drawImage(winScreen, 0, 0);
+                gc.restore();
+                if (alpha < 1) alpha += alphaDeltaWin;
         }
         
         
