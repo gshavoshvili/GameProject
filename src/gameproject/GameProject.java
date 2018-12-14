@@ -100,7 +100,8 @@ public class GameProject extends Application {
         // Using iterator directly to avoid ConcurrentModificationException
 
         Iterator<Bullet> iter = bullets.iterator();
-
+        
+        
         while (iter.hasNext()) {
             Bullet bullet = iter.next();
             bullet.update(delta);
@@ -140,15 +141,19 @@ public class GameProject extends Application {
             bullet.render(gc);
         }
         
+        HealthBar hb = new HealthBar(this, gc);
+        
         if ( state != state.DIED ) {
             hero.render(gc);
         }else{
             DeathWinScreen dws = new DeathWinScreen(this, gc, "Death");
         }
         if( state == state.WON ){
-            System.out.println("you won");
             DeathWinScreen dws = new DeathWinScreen(this, gc, "Win");
         }
+        
+        
+        
     }
 
     public void onMouseMove(MouseEvent e) {
