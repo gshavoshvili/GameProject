@@ -29,12 +29,7 @@ public class Vector {
         return new Vector(newX, newY);
     }
 
-    /*
-    dotProduct(vector) {
-        //console.log('dot: ', this.x, vector.x,this.y,vector.y );
-        return this.x * vector.x + this.y * vector.y;
-    }
-    */
+
 
     public Vector add(Vector vector) {
         return new Vector(
@@ -53,14 +48,7 @@ public class Vector {
     public static double angleBetween(Vector p1, Vector p2){
        return Math.atan2(p2.y - p1.y, p2.x - p1.x);
     }
-    /*
-    normal() {
-        return new Vector(
-            
-            -this.y,
-            this.x
-        );
-    }
-    */
+
+
     
 }

@@ -33,6 +33,10 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import java.io.File;
+import javafx.util.Duration;
 
 /**
  *
@@ -71,10 +75,16 @@ public class GameProject extends Application {
 
 
     public ArrayList<Bullet> bullets = new ArrayList<>();
-
+    public boolean audioPlaying = false;
 
     public final double CANVAS_WIDTH = 600;
     Background bck = new Background();
+    
+    String musicFile;
+        
+    Media sound;
+    MediaPlayer mediaPlayer;
+        
 
     BufferedImage winImg;
     BufferedImage deathImg;
@@ -101,14 +111,16 @@ public class GameProject extends Application {
                 + "gggggggggggggggggggggggggggggggggggggggggg-----------------gggggg-------gggggggggggggggggggggggggggggg---------------gggggggggggggggggggggggggggggggggggggggggggggggggggg/"
                 + "dddddddddddddddddddddddddddddddddddddddddd---------------------------dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
                 , 0, 400 - 12*32);
-        
-        
-        
+
         winImg = ImageIO.read(getClass().getResourceAsStream("resources/Win.png"));
         deathImg = ImageIO.read(getClass().getResourceAsStream("resources/You-Died.jpg"));
         
         winScreen = SwingFXUtils.toFXImage(winImg, null);
         deathScreen = SwingFXUtils.toFXImage(deathImg, null);
+        
+        musicFile = "src/GameProject/resources/testYourMight.mp3";
+        sound = new Media(new File(musicFile).toURI().toString());
+        mediaPlayer = new MediaPlayer(sound);
         
     }
 
@@ -134,12 +146,26 @@ public class GameProject extends Application {
 
 
 
+       
+        
+        
+        
         // camera offset
         cameraOffset = (int) hero.position.x - 285;
         if (cameraOffset < 0) {
             cameraOffset = 0;
         }
 
+        if(hero.position.x > 4500 && hero.position.x < 20000){
+            if(!audioPlaying){
+                mediaPlayer.seek(Duration.millis(14000));
+                mediaPlayer.play();
+                audioPlaying = true;
+            }
+            
+        }
+        
+        
     }
 
     public double alpha = 0;
